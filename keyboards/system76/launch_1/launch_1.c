@@ -204,3 +204,9 @@ void suspend_wakeup_init_kb(void) {
     rgb_matrix_set_suspend_state(false);
     suspend_wakeup_init_user();
 }
+
+void keyboard_post_init_user() {
+  debug_enable = false;
+  debug_matrix = false;
+}
+

@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <stdint.h>
+#include "../../umapper/main.h"
 #include "keyboard.h"
 #include "matrix.h"
 #include "keymap.h"
@@ -329,6 +330,7 @@ void keyboard_init(void) {
 #endif
 
     keyboard_post_init_kb(); /* Always keep this last */
+    umapper_init();
 }
 
 /** \brief key_event_task
@@ -376,6 +378,7 @@ void keyboard_task(void) {
         matrix_row    = matrix_get_row(r);
         matrix_change = matrix_row ^ matrix_prev[r];
         if (matrix_change) {
+            print("Hi\n");
 #ifdef MATRIX_HAS_GHOST
             if (has_ghost_in_row(r, matrix_row)) {
                 continue;

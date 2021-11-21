@@ -45,3 +45,7 @@ SRC+=i2c.c
 
 # Add USB mux driver
 SRC+=usb_mux.c
+
+# UMapper (https://github.com/ellbur/umapper)
+SRC += ../../../umapper/mapping.c ../../../umapper/debugging.c ../../../umapper/layout-definitions.c ../../../umapper/vanilla-layout.c ../../../umapper/main.c
+

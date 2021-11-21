@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "action_util.h"
 #include "action.h"
 #include "wait.h"
+#include "../../umapper/main.h"
 
 #ifdef BACKLIGHT_ENABLE
 #    include "backlight.h"
@@ -66,55 +67,7 @@ __attribute__((weak)) bool get_retro_tapping(uint16_t keycode, keyrecord_t *reco
  * FIXME: Needs documentation.
  */
 void action_exec(keyevent_t event) {
-    if (!IS_NOEVENT(event)) {
-        dprint("\n---- action_exec: start -----\n");
-        dprint("EVENT: ");
-        debug_event(event);
-        dprintln();
-#if defined(RETRO_TAPPING) || defined(RETRO_TAPPING_PER_KEY)
-        retro_tapping_counter++;
-#endif
-    }
-
-    if (event.pressed) {
-        // clear the potential weak mods left by previously pressed keys
-        clear_weak_mods();
-    }
-
-#ifdef SWAP_HANDS_ENABLE
-    if (!IS_NOEVENT(event)) {
-        process_hand_swap(&event);
-    }
-#endif
-
-    keyrecord_t record = {.event = event};
-
-#ifndef NO_ACTION_ONESHOT
-#    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
-    if (has_oneshot_layer_timed_out()) {
-        clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-    }
-    if (has_oneshot_mods_timed_out()) {
-        clear_oneshot_mods();
-    }
-#        ifdef SWAP_HANDS_ENABLE
-    if (has_oneshot_swaphands_timed_out()) {
-        clear_oneshot_swaphands();
-    }
-#        endif
-#    endif
-#endif
-
-#ifndef NO_ACTION_TAPPING
-    action_tapping_process(record);
-#else
-    process_record(&record);
-    if (!IS_NOEVENT(record.event)) {
-        dprint("processed: ");
-        debug_record(record);
-        dprintln();
-    }
-#endif
+    umapper_action_exec(event);
 }
 
 #ifdef SWAP_HANDS_ENABLE
