@@ -1,6 +1,8 @@
 
 #include "main.h"
 
+#include <stdio.h>
+
 #include "vanilla-layout.h"
 #include "layout-definitions.h"
 #include "mapping.h"
@@ -48,15 +50,17 @@ void umapper_init(void) {
 }
 
 void umapper_action_exec(keyevent_t event) {
+  printf("umapper_action_exec()\n");
+
   struct layout our_layout = {
     .mappings = our_mappings,
     .key_definitions = our_key_definitions,
     .num_keys = our_num_keys
   };
-  
+
   if (event.key.row < VANILLA_LAYOUT_ROWS && event.key.col < VANILLA_LAYOUT_COLS) {
     key_code k = vanilla_layout[event.key.row][event.key.col];
-    
+
     if (k != 0) {
       step(&our_layout, &state, event.pressed ? PRESSED : RELEASED, k, output_event_routine, 0);
     }

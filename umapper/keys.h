@@ -12,7 +12,7 @@ extern "C" {
 
 #define MAX_KEYS 0xE8
 typedef enum hid_keyboard_keypad_usage key_code;
-    
+
 #ifdef __cplusplus
 }
 #endif

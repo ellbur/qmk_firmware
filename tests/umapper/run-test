@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+here="$(dirname $0)"
+
+gcc -o test1 \
+  -g \
+  -O0 \
+  -Wall \
+  -I $here \
+  -I $here/../../quantum \
+  -I $here/../../quantum/audio \
+  -I $here/../../quantum/process_keycode \
+  -I $here/../../tmk_core/common \
+  -D__flash= \
+  -std=c99 \
+  $here/test1.c \
+  $here/../../umapper/layout-definitions.c \
+  $here/../../umapper/debugging.c \
+  $here/../../umapper/main.c \
+  $here/../../umapper/mapping.c \
+  $here/../../umapper/vanilla-layout.c \
+  $here/minimal.c
+
+$here/test1
+
